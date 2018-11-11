@@ -8,7 +8,6 @@
 #ifndef GRAPH_HPP_
 #define GRAPH_HPP_
 #include <iostream>
-#include <sstream>
 #include <fstream>
 #include <vector>
 #include "TSP.hpp"
@@ -19,9 +18,10 @@ typedef std::vector<int> Path;
 
 class Graph {
 	Matrix adjacency_matrix;
-	int vertexes_number;
-	int edges_number;
-	Path algorithm_result;
+	int vertex_number;
+	int edge_number;
+	Path algorithm_result_path;
+	int algorithm_result_cost;
 
 public:
 	Graph(int matrix_size = 0);
@@ -35,7 +35,6 @@ public:
 	int getVertexesNumber();
 	int getEdgesNumber();
 	Path getResult();
-	int getResultLength();
 
 	void loadFromFile(std::string filename);
 	void saveToFile(std::string filename);

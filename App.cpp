@@ -6,16 +6,20 @@
  */
 
 #include "App.hpp"
+#include <vector>
 
-App::App() : graph() {
-	try {
-		graph.loadFromFile("tsp.txt");
-		std::cout << graph << std::endl;
-	} catch(Exception & e) {
-		std::cout << e.what() << std::endl;
-	}
-	std::cout << "OK!" << std::endl;
-	// TODO Auto-generated constructor stub
+App::App() :
+		graph() {
+	std::string name;
+	std::cin >> name;
+	graph.loadFromFile(name);
+	std::cout << graph << std::endl;
+
+	timer.startTimer();
+	graph.solveTSP();
+	timer.stopTimer();
+	std::cout << "Czas: " << timer.getTimeMs() << " ms" << std::endl;
+
 }
 
 App::~App() {

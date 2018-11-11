@@ -8,98 +8,98 @@
 #include "TSP.hpp"
 
 TSP::TSP(std::vector<std::vector<int>> adjacency_matrix) :
-		vertexes_number(adjacency_matrix.size()) {
+		vertex_number(adjacency_matrix.size()) {
 	convertToArray(adjacency_matrix);
-
-	v0 = 0;
-	d = INF;
-	dh = 0;
-	sptr = 0;
-	shptr = 0;
-
-	S.reserve(vertexes_number);
-	Sh.reserve(vertexes_number);
-
-	visited = new bool[vertexes_number];
-	/*A = new std::unique_ptr<bool>[vertexes_number];
-	 W = new std::unique_ptr<int>[vertexes_number];
-	 for (int i = 0; i < vertexes_number; i++) {
-	 A[i] = new bool[vertexes_number];
-	 W[i] = new int[vertexes_number];
-	 for (int j = 0; j < vertexes_number; j++) {
-	 A[i][j] = false;
-	 W[i][j] = 0;
-	 }
-	 visited[i] = false;
-	 }
-
-	 // Odczytujemy dane wejściowe
-	 for (i = 0; i < m; i++) {
-	 std::cin >> x >> y >> z;
-	 A[x][y] = A[y][x] = true;     // Krawędź x-y
-	 W[x][y] = W[y][x] = z;     // Waga krawędzi x-y
-	 }
-
-	 std::cout << std::endl;*/
-
-	// Rozpoczynamy algorytm
-	start(v0);
-	if (sptr) {
-		for (int i = 0; i < sptr; i++)
-			std::cout << S[i] << " ";
-		std::cout << v0 << std::endl;
-		std::cout << "d = " << d << std::endl;
-	} else
-		std::cout << "NO HAMILTONIAN CYCLE" << std::endl;
-
-	std::cout << std::endl;
-
 }
 
 TSP::~TSP() {
-}
-
-void TSP::start(int v) {
-	int u;
-
-	Sh[shptr++] = v;              // zapamiętujemy na stosie bieżący wierzchołek
-
-	if (shptr < vertexes_number) // jeśli brak ścieżki Hamiltona, to jej szukamy
-			{
-		visited[v] = true;      // Oznaczamy bieżący wierzchołek jako odwiedzony
-		for (u = 0; u < vertexes_number; u++) // Przeglądamy sąsiadów wierzchołka v
-			if (A[v][u] && !visited[u]) // Szukamy nieodwiedzonego jeszcze sąsiada
-					{
-				dh += W[v][u];            // Dodajemy wagę krawędzi v-u do sumy
-				start(u);   // Rekurencyjnie wywołujemy szukanie cyklu Hamiltona
-				dh -= W[v][u];            // Usuwamy wagę krawędzi z sumy
-			}
-		visited[v] = false;           // Zwalniamy bieżący wierzchołek
-	} else if (A[v0][v]) {     // Jeśli znaleziona ścieżka jest cyklem Hamiltona
-		dh += W[v][v0];            // to sprawdzamy, czy ma najmniejszą sumę wag
-		if (dh < d)                    // Jeśli tak,
-				{
-			d = dh;                     // To zapamiętujemy tę sumę
-			for (u = 0; u < shptr; u++)  // oraz kopiujemy stos Sh do S
-				S[u] = Sh[u];
-			sptr = shptr;
-		}
-		dh -= W[v][v0];               // Usuwamy wagę krawędzi v-v0 z sumy
+	for (int i = 0; i < vertex_number; i++) {
+		delete[] adjacency_matrix[i];
 	}
-	shptr--;                        // Usuwamy bieżący wierzchołek ze ścieżki
+	delete[] adjacency_matrix;
+}
+
+void TSP::bruteForce(int vertex_start) {
+	int* vertex_array = new int[vertex_number];
+	int* result_array = new int[vertex_number];
+	int min_cost = INT_MAX;
+	vertex_array[0] = vertex_start;
+	for (int i = 1; i < vertex_number; i++) {
+		if (i > vertex_start)
+			vertex_array[i] = i;
+		else
+			vertex_array[i] = i - 1;
+	}
+	for (int i = 0; i < vertex_number; i++)
+		result_array[i] = -1;
+
+	do {
+		int total_cost = 0;
+		for (int i = 0; i < vertex_number - 1; i++)
+			total_cost +=
+					adjacency_matrix[vertex_array[i]][vertex_array[i + 1]];
+		total_cost +=
+				adjacency_matrix[vertex_array[vertex_number - 1]][vertex_array[0]];
+
+		if (total_cost < min_cost) {
+			min_cost = total_cost;
+			for (int j = 0; j < vertex_number; ++j)
+				result_array[j] = vertex_array[j];
+		}
+		nextPermutation(vertex_array, vertex_array + vertex_number);
+	} while (vertex_array[0] == vertex_start);
+
+	for (int i = 0; i < vertex_number; i++) {
+		result_path.push_back(result_array[i]);
+	}
+	result_path.push_back(result_array[0]);
+	result_cost = min_cost;
+}
+
+int* TSP::branchAndBound() {
 
 }
 
-std::vector<int> TSP::getResult() {
-	return result;
+std::vector<int> TSP::getResultPath() {
+	return result_path;
+}
+
+int TSP::getResultCost() {
+	return result_cost;
 }
 
 void TSP::convertToArray(std::vector<std::vector<int>> vec) {
-	adjacency_matrix = new int*[vertexes_number];
-	for (int i = 0; i < vertexes_number; i++) {
-		adjacency_matrix[i] = new int[vertexes_number];
-		for (int j = 0; j < vertexes_number; j++) {
+	adjacency_matrix = new int*[vertex_number];
+	for (int i = 0; i < vertex_number; i++) {
+		adjacency_matrix[i] = new int[vertex_number];
+		for (int j = 0; j < vertex_number; j++) {
 			adjacency_matrix[i][j] = vec[i][j];
+		}
+	}
+}
+
+bool TSP::nextPermutation(int* begin, int* end) {
+	if (begin == end)
+		return false;
+	int* i = begin + 1;
+	if (i == end)
+		return false;
+	i = end - 1;
+	while (true) {
+		int* j = i;
+		i--;
+
+		if (*i < *j) {
+			int* k = end;
+			while (!(*i < *--k))
+				;
+			std::swap(*i, *k);
+			std::reverse(j, end);
+			return true;
+		}
+		if (i == begin) {
+			std::reverse(begin, end);
+			return false;
 		}
 	}
 }

@@ -8,41 +8,31 @@
 #ifndef TSP_HPP_
 #define TSP_HPP_
 #include <iostream>
+#include <stdio.h>
 #include <array>
 #include <vector>
-#include <memory>
-#include "Graph.hpp"
-
-const int INF = 2147483647;
+#include <utility>
+#include <bits/stdc++.h>
 
 class TSP {
-	int vertexes_number;
-	int v0;
-	int d;
-	int dh;
-	int sptr;
-	int shptr;
-
-	bool** A;	// Macierz sąsiedztwa
-	int** W;	// Macierz wag krawędzi
-
-	int** adjacency_matrix;	// Macierz sąsiedztwa
-
-	std::vector<int> S;							// Stos w tablicy
-	std::vector<int> Sh;						// Stos w tablicy
-	bool* visited;				// Tablica odwiedzin
-
-	std::vector<int> result;
+	int** adjacency_matrix;
+	int vertex_number;
+	std::vector<int> result_path;
+	int result_cost;
 
 public:
 	TSP(std::vector<std::vector<int>> adjacency_matrix);
 	virtual ~TSP();
 
-	void start(int v);
-	std::vector<int> getResult();
+	void bruteForce(int vertex_start);
+	int* branchAndBound();
+
+	std::vector<int> getResultPath();
+	int getResultCost();
 
 private:
 	void convertToArray(std::vector<std::vector<int>> vec);
+	bool nextPermutation(int* begin, int* end);
 };
 
 #endif /* TSP_HPP_ */
