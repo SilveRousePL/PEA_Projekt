@@ -20,6 +20,7 @@ class Graph {
 	Matrix adjacency_matrix;
 	int vertex_number;
 	int edge_number;
+	std::string filename;
 	Path algorithm_result_path;
 	int algorithm_result_cost;
 
@@ -32,14 +33,16 @@ public:
 	void removeVertex(int vertex);
 	void removeEdge(int begin, int end);
 
-	int getVertexesNumber();
+	int getVertexNumber();
 	int getEdgesNumber();
 	Path getResult();
+	std::string getFilename();
 
 	void loadFromFile(std::string filename);
 	void saveToFile(std::string filename);
 
-	void solveTSP();
+	void solveTSP_BF();
+	void solveTSP_BB();
 
 	void print();
 

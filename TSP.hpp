@@ -8,9 +8,8 @@
 #ifndef TSP_HPP_
 #define TSP_HPP_
 #include <iostream>
-#include <stdio.h>
-#include <array>
 #include <vector>
+#include <algorithm>
 #include <utility>
 #include <bits/stdc++.h>
 
@@ -25,7 +24,7 @@ public:
 	virtual ~TSP();
 
 	void bruteForce(int vertex_start);
-	int* branchAndBound();
+	void branchAndBound();
 
 	std::vector<int> getResultPath();
 	int getResultCost();

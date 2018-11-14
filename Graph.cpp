@@ -66,7 +66,7 @@ void Graph::removeEdge(int begin, int end) {
 	setEdge(begin, end, -1);
 }
 
-int Graph::getVertexesNumber() {
+int Graph::getVertexNumber() {
 	return vertex_number;
 }
 
@@ -76,6 +76,10 @@ int Graph::getEdgesNumber() {
 
 Path Graph::getResult() {
 	return algorithm_result_path;
+}
+
+std::string Graph::getFilename() {
+	return filename;
 }
 
 void Graph::loadFromFile(std::string filename) {
@@ -103,6 +107,7 @@ void Graph::loadFromFile(std::string filename) {
 
 	vertex_number = result_vertex_number;
 	adjacency_matrix = result_adjacency_matrix;
+	this->filename = filename;
 }
 
 void Graph::saveToFile(std::string filename) {
@@ -110,24 +115,53 @@ void Graph::saveToFile(std::string filename) {
 	handle.open("." + filename + ".tmp", std::ios::out | std::ios::trunc);
 	if (!handle.is_open())
 		throw FileException("File isn't open!");
-	handle << getVertexesNumber() << std::endl;
+	handle << getVertexNumber() << std::endl;
 	handle << *this << std::endl;
 }
 
-void Graph::solveTSP() {
+void Graph::solveTSP_BF() {
 	TSP algorithm(adjacency_matrix);
 	algorithm.bruteForce(0);
 	algorithm_result_path = algorithm.getResultPath();
 	algorithm_result_cost = algorithm.getResultCost();
-
-	for (int i = 0; i < vertex_number; i++)
+	for (int i = 0; i < algorithm_result_path.size() - 1; i++)
 		std::cout << algorithm_result_path[i] << "->";
-	std::cout << algorithm_result_path[vertex_number] << std::endl;
+	std::cout << algorithm_result_path[algorithm_result_path.size() - 1]
+			<< std::endl;
+	std::cout << "Koszt = " << algorithm_result_cost << std::endl;
+
+}
+
+void Graph::solveTSP_BB() {
+	TSP algorithm(adjacency_matrix);
+	algorithm.branchAndBound();
+	algorithm_result_path = algorithm.getResultPath();
+	algorithm_result_cost = algorithm.getResultCost();
+	for (int i = 0; i < algorithm_result_path.size() - 1; i++)
+		std::cout << algorithm_result_path[i] << "->";
+	std::cout << algorithm_result_path[algorithm_result_path.size() - 1]
+			<< std::endl;
 	std::cout << "Koszt = " << algorithm_result_cost << std::endl;
 }
 
 void Graph::print() {
-	std::cout << *this;
+	std::cout << "     ";
+	for (int i = 0; i < getVertexNumber(); i++) {
+		std::cout << std::setw(3) << i << " ";
+	}
+	std::cout << std::endl;
+	for (int i = 0; i < getVertexNumber() * 5 + 8; i++) {
+		std::cout << "-";
+	}
+	std::cout << std::endl;
+	for (int i = 0; i < getVertexNumber(); i++) {
+		std::cout << std::setw(3) << i << " |";
+		for (int j = 0; j < getVertexNumber(); j++) {
+			std::cout << std::setw(3) << adjacency_matrix[i][j] << " ";
+		}
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
 }
 
 std::vector<int>& Graph::operator [](uint index) {
@@ -135,8 +169,8 @@ std::vector<int>& Graph::operator [](uint index) {
 }
 
 std::ostream & operator <<(std::ostream & ostr, Graph & obj) {
-	for (int i = 0; i < obj.getVertexesNumber(); i++) {
-		for (int j = 0; j < obj.getVertexesNumber(); j++) {
+	for (int i = 0; i < obj.getVertexNumber(); i++) {
+		for (int j = 0; j < obj.getVertexNumber(); j++) {
 			ostr << std::setw(3) << obj[i][j] << " ";
 		}
 		ostr << std::endl;

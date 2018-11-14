@@ -18,6 +18,9 @@ class App {
 public:
 	App();
 	virtual ~App();
+	void run();
+	bool enterFileName();
+	void showGraph();
 };
 
 #endif /* APP_HPP_ */
