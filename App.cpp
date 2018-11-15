@@ -44,7 +44,8 @@ void App::run() {
 			timer.startTimer();
 			graph.solveTSP_BB();
 			timer.stopTimer();
-			std::cout << "Czas: " << timer.getTimeMs() << " ms" << std::endl;
+			std::cout << "Czas: " << timer.getTimeUs() << "us ("
+					<< timer.getTimeMs() << " ms)" << std::endl;
 			break;
 		case 8:
 			showGraph();

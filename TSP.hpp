@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <utility>
 #include <bits/stdc++.h>
+#define debug false
 
 class TSP {
 	int** adjacency_matrix;

@@ -77,6 +77,11 @@ void TSP::branchAndBound() {
 	active_row[vertex_number] = false;
 	active_col[vertex_number] = false;
 
+	int max_row_index = 0;
+	int max_row_value = 0;
+	int max_col_index = 0;
+	int max_col_value = 0;
+
 	std::vector<int> result_row;
 	result_row.reserve(vertex_number);
 	std::vector<int> result_col;
@@ -122,8 +127,8 @@ void TSP::branchAndBound() {
 		/*
 		 * Jeśli uzyskaliśmy macierz 2x2 to przeskakujemy do czynności końcowych
 		 */
-		if (active_vertex_number == 2)
-			break;
+		/*if (active_vertex_number == 2)
+		 break;*/
 
 		/*
 		 * Przeszukujemy każdy wiersz i kolumnę w poszukiwaniu najmniejszego elementu
@@ -161,8 +166,8 @@ void TSP::branchAndBound() {
 		/*
 		 * Z odnalezionych elementów wybieramy wartość posiadającą największy koszt
 		 */
-		int max_row_index = 0;
-		int max_row_value = 0;
+		max_row_index = 0;
+		max_row_value = 0;
 		for (int i = 0; i < vertex_number; i++) {
 			if (matrix[i][vertex_number]
 					> max_row_value&& matrix[i][vertex_number] != INT_MAX) {
@@ -170,8 +175,8 @@ void TSP::branchAndBound() {
 				max_row_value = matrix[i][vertex_number];
 			}
 		}
-		int max_col_index = 0;
-		int max_col_value = 0;
+		max_col_index = 0;
+		max_col_value = 0;
 		for (int i = 0; i < vertex_number; i++) {
 			if (matrix[vertex_number][i]
 					> max_col_value&& matrix[vertex_number][i] != INT_MAX) {
@@ -179,6 +184,9 @@ void TSP::branchAndBound() {
 				max_col_value = matrix[vertex_number][i];
 			}
 		}
+
+		if (active_vertex_number == 2)
+			break;
 
 		/*
 		 * I porównujemy czy wartość z kolumn jest największa czy z wierszy,
@@ -224,31 +232,33 @@ void TSP::branchAndBound() {
 		}
 
 		//DEBUG COUT
-		std::cout << "      ";
-		for (int i = 0; i < vertex_number; i++) {
-			if (!active_col[i])
-				continue;
-			std::cout << std::setw(3) << i << " ";
-		}
-		std::cout << std::endl;
-		for (int i = 0; i < vertex_number; i++) {
-			if (!active_row[i])
-				continue;
-			std::cout << std::setw(4) << i << " | ";
-			for (int j = 0; j < vertex_number; j++) {
-				if (!active_col[j])
+		if (debug) {
+			std::cout << "      ";
+			for (int i = 0; i < vertex_number; i++) {
+				if (!active_col[i])
 					continue;
-				if (matrix[i][j] == INT_MAX) {
-					std::cout << std::setw(3) << "INF";
-				} else {
-					std::cout << std::setw(3) << matrix[i][j];
-				}
-				std::cout << " ";
+				std::cout << std::setw(3) << i << " ";
 			}
 			std::cout << std::endl;
+			for (int i = 0; i < vertex_number; i++) {
+				if (!active_row[i])
+					continue;
+				std::cout << std::setw(4) << i << " | ";
+				for (int j = 0; j < vertex_number; j++) {
+					if (!active_col[j])
+						continue;
+					if (matrix[i][j] == INT_MAX) {
+						std::cout << std::setw(3) << "INF";
+					} else {
+						std::cout << std::setw(3) << matrix[i][j];
+					}
+					std::cout << " ";
+				}
+				std::cout << std::endl;
+			}
+			std::cout << "---------------------------------------------";
+			std::cout << std::endl << std::endl;
 		}
-		std::cout << "---------------------------------------------";
-		std::cout << std::endl << std::endl;
 	} //Koniec głównego algorytmu
 
 	/*
@@ -270,30 +280,35 @@ void TSP::branchAndBound() {
 		}
 	}
 	for (int i = 0; i < tab.size(); i++) {
-		if (tab[i][2] == INT_MAX) {
-			if (i == 0 || i == 3) {
-				result_row.push_back(tab[1][0]);
-				result_col.push_back(tab[1][1]);
-				result_row.push_back(tab[2][0]);
-				result_col.push_back(tab[2][1]);
-			} else {
-				result_row.push_back(tab[0][0]);
-				result_col.push_back(tab[0][1]);
-				result_row.push_back(tab[3][0]);
-				result_col.push_back(tab[3][1]);
-			}
+		if (tab[i][2] == INT_MAX && (i == 0 || i == 3)) {
+			result_row.push_back(tab[1][0]);
+			result_col.push_back(tab[1][1]);
+			result_row.push_back(tab[2][0]);
+			result_col.push_back(tab[2][1]);
+		} else if (tab[i][2] == INT_MAX && (i == 1 || i == 2)) {
+			result_row.push_back(tab[0][0]);
+			result_col.push_back(tab[0][1]);
+			result_row.push_back(tab[3][0]);
+			result_col.push_back(tab[3][1]);
+		} else {
+			result_row.push_back(tab[1][0]);
+			result_col.push_back(tab[1][1]);
+			result_row.push_back(tab[2][0]);
+			result_col.push_back(tab[2][1]);
 		}
 	}
 
-	std::cout << "ROW: ";
-	for (int i = 0; i < vertex_number; i++) {
-		std::cout << result_row[i] << " ";
+	if (debug) {
+		std::cout << "ROW: ";
+		for (int i = 0; i < vertex_number; i++) {
+			std::cout << result_row[i] << " ";
+		}
+		std::cout << std::endl << "COL: ";
+		for (int i = 0; i < vertex_number; i++) {
+			std::cout << result_col[i] << " ";
+		}
+		std::cout << std::endl << std::endl;
 	}
-	std::cout << std::endl << "COL: ";
-	for (int i = 0; i < vertex_number; i++) {
-		std::cout << result_col[i] << " ";
-	}
-	std::cout << std::endl << std::endl;
 
 	result_path.clear();
 	result_path.push_back(0);
