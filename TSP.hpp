@@ -12,9 +12,17 @@
 #include <algorithm>
 #include <utility>
 #include <bits/stdc++.h>
-#define debug false
+#define debug true
+
+enum TSP_algorithm {
+	BRUTEFORCE,
+	BRANCH_AND_BOUND,
+	TABU_SEARCH,
+	SIMULATED_ANNEALING
+};
 
 class TSP {
+protected:
 	int** adjacency_matrix;
 	int vertex_number;
 	std::vector<int> result_path;
@@ -22,16 +30,16 @@ class TSP {
 
 public:
 	TSP(std::vector<std::vector<int>> adjacency_matrix);
+	TSP(int** adjacency_matrix, int size);
 	virtual ~TSP();
 
-	void bruteForce(int vertex_start);
-	void branchAndBound();
+	virtual void start() = 0;
 
 	std::vector<int> getResultPath();
 	int getResultCost();
+	int calcCost(std::vector<int>& path);
 
-private:
-	void convertToArray(std::vector<std::vector<int>> vec);
+protected:
 	bool nextPermutation(int* begin, int* end);
 };
 

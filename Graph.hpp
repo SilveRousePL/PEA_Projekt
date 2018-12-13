@@ -9,20 +9,21 @@
 #define GRAPH_HPP_
 #include <iostream>
 #include <fstream>
-#include <vector>
-#include "TSP.hpp"
+#include <memory>
+#include "Timer.hpp"
+#include "BruteForce.hpp"
+#include "BranchAndBound.hpp"
+#include "Annealing.hpp"
 #include "Exception.hpp"
 
 typedef std::vector<std::vector<int>> Matrix;
 typedef std::vector<int> Path;
 
-class Graph {
+class Graph: public Timer {
 	Matrix adjacency_matrix;
 	int vertex_number;
 	int edge_number;
 	std::string filename;
-	Path algorithm_result_path;
-	int algorithm_result_cost;
 
 public:
 	Graph(int matrix_size = 0);
@@ -35,14 +36,13 @@ public:
 
 	int getVertexNumber();
 	int getEdgesNumber();
-	Path getResult();
 	std::string getFilename();
 
 	void loadFromFile(std::string filename);
 	void saveToFile(std::string filename);
 
-	void solveTSP_BF();
-	void solveTSP_BB();
+	void solveTSP(TSP_algorithm alg);
+	void annealingTest();
 
 	void print();
 

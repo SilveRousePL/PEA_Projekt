@@ -8,7 +8,7 @@
 #include "Graph.hpp"
 
 Graph::Graph(int matrix_size) :
-		vertex_number(0), edge_number(0), algorithm_result_cost(-1) {
+		vertex_number(0), edge_number(0) {
 	if (vertex_number > 0)
 		adjacency_matrix.reserve(matrix_size);
 }
@@ -74,10 +74,6 @@ int Graph::getEdgesNumber() {
 	return edge_number;
 }
 
-Path Graph::getResult() {
-	return algorithm_result_path;
-}
-
 std::string Graph::getFilename() {
 	return filename;
 }
@@ -89,6 +85,19 @@ void Graph::loadFromFile(std::string filename) {
 		throw FileException("File isn't open!");
 
 	Matrix result_adjacency_matrix;
+
+	std::string check;
+	handle >> check;
+	for (size_t i = 0; i < check.length(); i++) {
+		if (check[i] >= '0' && check[i] <= '9') {
+			if (i == check.length() - 1)
+				handle.seekg(0, std::ios_base::beg);
+			continue;
+		} else {
+			break;
+		}
+	}
+
 	int result_vertex_number = 0;
 	handle >> result_vertex_number;
 
@@ -102,6 +111,7 @@ void Graph::loadFromFile(std::string filename) {
 		}
 		result_adjacency_matrix.push_back(vec);
 	}
+//TODO: Checking integrity
 	/*if (!checkIntegrity(result_adjacency_matrix))
 	 throw FileException("File isn't valid!");*/
 
@@ -119,29 +129,101 @@ void Graph::saveToFile(std::string filename) {
 	handle << *this << std::endl;
 }
 
-void Graph::solveTSP_BF() {
-	TSP algorithm(adjacency_matrix);
-	algorithm.bruteForce(0);
-	algorithm_result_path = algorithm.getResultPath();
-	algorithm_result_cost = algorithm.getResultCost();
-	for (int i = 0; i < algorithm_result_path.size() - 1; i++)
+void Graph::solveTSP(TSP_algorithm alg) {
+//std::unique_ptr<TSP> tsp;
+	TSP* tsp = nullptr;
+	Annealing* tsp_annealing = nullptr;
+	switch (alg) {
+	case TSP_algorithm::BRUTEFORCE:
+		tsp = new BruteForce(adjacency_matrix);
+		break;
+	case TSP_algorithm::BRANCH_AND_BOUND:
+		tsp = new BranchAndBound(adjacency_matrix);
+		break;
+	case TSP_algorithm::TABU_SEARCH:
+		throw NotImplemented("Tabu Search algorithm is not implemented");
+		break;
+	case TSP_algorithm::SIMULATED_ANNEALING:
+		tsp = new Annealing(adjacency_matrix);
+		tsp_annealing = dynamic_cast<Annealing*>(tsp);
+		/*int beg_temp;
+		 double temp_change_factor, worse_accept_factor;
+		 std::cout << "Podaj parametry wyszukiwania" << std::endl
+		 << "(Temperatura początkowa (int), współczynnik zmiany temperatury <0-1), współczynnik akceptacji gorszych rozwiązań (0,inf) ): "
+		 << std::endl;
+		 //
+		 std::cin >> beg_temp >> temp_change_factor >> worse_accept_factor;
+		 tsp_annealing->enterParam(beg_temp, temp_change_factor,
+		 worse_accept_factor);*/
+		tsp_annealing->enterParam(500, 0.99, 50);
+		break;
+	default:
+		throw NotImplemented("Algorithm is not implemented");
+	}
+	startTimer();
+	tsp->start();
+	stopTimer();
+	Path algorithm_result_path = tsp->getResultPath();
+	int algorithm_result_cost = tsp->getResultCost();
+	for (size_t i = 0; i < algorithm_result_path.size() - 1; i++)
 		std::cout << algorithm_result_path[i] << "->";
 	std::cout << algorithm_result_path[algorithm_result_path.size() - 1]
 			<< std::endl;
 	std::cout << "Koszt = " << algorithm_result_cost << std::endl;
-
+	std::cout << "Czas: " << getTimeUs() << "us (" << getTimeMs() << " ms)"
+			<< std::endl;
 }
 
-void Graph::solveTSP_BB() {
-	TSP algorithm(adjacency_matrix);
-	algorithm.branchAndBound();
-	algorithm_result_path = algorithm.getResultPath();
-	algorithm_result_cost = algorithm.getResultCost();
-	for (int i = 0; i < algorithm_result_path.size() - 1; i++)
-		std::cout << algorithm_result_path[i] << "->";
-	std::cout << algorithm_result_path[algorithm_result_path.size() - 1]
+void Graph::annealingTest() {
+	system("ls AnnealingTest -w 1 -v > annealingTestFN.txt");
+	std::fstream handle;
+	handle.open("annealingTestFN.txt", std::ios::in);
+	std::vector<std::string> input;
+	while (!handle.eof()) {
+		std::string tmp;
+		getline(handle, tmp);
+		input.push_back(tmp);
+	}
+	input.pop_back();
+	handle.close();
+
+	int beg_temp, measure_number;
+	double temp_change_factor, worse_accept_factor;
+	std::cout << "Podaj parametry wyszukiwania" << std::endl
+			<< "(Temperatura początkowa (int), współczynnik zmiany temperatury <0-1), współczynnik akceptacji gorszych rozwiązań (0,inf) , ilość pomiarów (int)): "
 			<< std::endl;
-	std::cout << "Koszt = " << algorithm_result_cost << std::endl;
+	std::cin >> beg_temp >> temp_change_factor >> worse_accept_factor
+			>> measure_number;
+
+	handle.open("annealingTestRes.txt", std::ios::out | std::ios::trunc);
+	handle << "Nazwa" << "\t" << "Ilość wierzchołków" << "\t" << "Średni czas"
+			<< "\t" << "Najlepszy koszt" << std::endl;
+	std::cout << "Nazwa" << "\t" << "Średni czas" << "\t" << "Najlepszy koszt"
+			<< std::endl;
+	for (int file_i = 0; file_i < input.size(); file_i++) {
+		std::cout << input[file_i] << "\t";
+		loadFromFile("AnnealingTest/" + input[file_i]);
+		Annealing tsp(adjacency_matrix);
+		long int res_time = 0;
+		int best_cost = INT_MAX;
+		tsp.enterParam(beg_temp, temp_change_factor, worse_accept_factor);
+		for (int res_i = 0; res_i < measure_number; res_i++) {
+			startTimer();
+			tsp.start();
+			stopTimer();
+			res_time += getTimeMs();
+			if (tsp.getResultCost() < best_cost)
+				best_cost = tsp.getResultCost();
+		}
+		std::cout << res_time / measure_number << "\t" << best_cost
+				<< std::endl;
+		handle << input[file_i] << "\t" << vertex_number << "\t"
+				<< res_time / measure_number << "\t" << best_cost << std::endl;
+	}
+	handle.close();
+	// Temperatura początkowa (int)
+	// współczynnik zmiany temperatury <0-1)
+	// współczynnik akceptacji gorszych rozwiązań (0,inf)
 }
 
 void Graph::print() {
@@ -179,6 +261,6 @@ std::ostream & operator <<(std::ostream & ostr, Graph & obj) {
 }
 
 bool Graph::checkIntegrity(Matrix adjacency_matrix) {
-	//TODO: sprawdzenie zgodności macierzy
+//TODO: sprawdzenie zgodności macierzy
 	return true;
 }

@@ -7,47 +7,65 @@
 
 class Exception {
 protected:
-    std::string c;
+	std::string c;
 
 public:
-    Exception(std::string comment) : c(comment) {}
-    virtual ~Exception() = default;
+	Exception(std::string comment) :
+			c(comment) {
+	}
+	virtual ~Exception() = default;
 
-    std::string what() const {
-        return c;
-    }
+	std::string what() const {
+		return c;
+	}
 
-    virtual void sysWindow() const = 0;
+	virtual void sysWindow() const = 0;
 };
 
-class NullPointerException : public Exception {
+class NullPointerException: public Exception {
 public:
-    NullPointerException(std::string comment): Exception(comment) {}
-    void sysWindow() const override {
-        //TO-DO MessageBox "Exception occurred and application will be closed."
-    }
+	NullPointerException(std::string comment) :
+			Exception(comment) {
+	}
+	void sysWindow() const override {
+		//TO-DO MessageBox "Exception occurred and application will be closed."
+	}
 };
 
-class RangeExceeded : public Exception {
+class RangeExceeded: public Exception {
 public:
-	RangeExceeded(std::string comment): Exception(comment) {}
-    void sysWindow() const override {
-        //TO-DO MessageBox "Exception occurred and application will be closed."
-    }
+	RangeExceeded(std::string comment) :
+			Exception(comment) {
+	}
+	void sysWindow() const override {
+		//TO-DO MessageBox "Exception occurred and application will be closed."
+	}
 };
 
-class FileException : public Exception {
+class FileException: public Exception {
 public:
-	FileException(std::string comment): Exception(comment) {}
-    void sysWindow() const override {
-        //TO-DO MessageBox "Exception occurred and application will be closed."
-    }
+	FileException(std::string comment) :
+			Exception(comment) {
+	}
+	void sysWindow() const override {
+		//TO-DO MessageBox "Exception occurred and application will be closed."
+	}
+};
+
+class NotImplemented: public Exception {
+public:
+	NotImplemented(std::string comment) :
+			Exception(comment) {
+	}
+	void sysWindow() const override {
+		//TO-DO MessageBox "Exception occurred and application will be closed."
+	}
 };
 
 /*class CriticalException : public Exception {
-public:
-    CriticalException(std::string comment): Exception(comment) {}
-    void sysWindow() const override {
-        //TO-DO MessageBox "Exception occurred and application will be closed."
-    }
-};*/
+ public:
+ CriticalException(std::string comment): Exception(comment) {}
+ void sysWindow() const override {
+ //TO-DO MessageBox "Exception occurred and application will be closed."
+ }
+ };*/

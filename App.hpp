@@ -9,11 +9,11 @@
 #define APP_HPP_
 #include <iostream>
 #include "Graph.hpp"
-#include "Timer.hpp"
+//#include "Timer.hpp"
 
 class App {
 	Graph graph;
-	Timer timer;
+	//Timer timer;
 
 public:
 	App();
