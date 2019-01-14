@@ -14,6 +14,7 @@
 #include "BruteForce.hpp"
 #include "BranchAndBound.hpp"
 #include "Annealing.hpp"
+#include "Genetic.hpp"
 #include "Exception.hpp"
 
 typedef std::vector<std::vector<int>> Matrix;

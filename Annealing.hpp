@@ -26,7 +26,6 @@ public:
 
 private:
 	std::vector<int> algorithm();
-	std::vector<int> randomSolution(int number);
 	std::vector<int> adjacentSolution(std::vector<int> res);
 };
 

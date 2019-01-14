@@ -64,7 +64,7 @@ std::vector<int> Annealing::algorithm() {
 		}
 		temperature *= temperature_change_factor; // Zmniejszanie temperatury wg zadanego współczynnika
 		/*++i;
-		if (prev_cost != cost_current_solution)
+		 if (prev_cost != cost_current_solution)
 		 file << "(" << i << "," << cost_current_solution << ")"
 		 << std::endl;
 		 prev_cost = cost_current_solution;*/
@@ -78,27 +78,6 @@ void Annealing::enterParam(int beg_temp, double temp_change_factor,
 	this->begin_temperature = beg_temp;
 	this->temperature_change_factor = temp_change_factor;
 	this->worse_acceptable_factor = worse_accept_factor;
-}
-
-std::vector<int> Annealing::randomSolution(int number) {
-	srand(time(NULL));
-	int* tab_i = new int[number];
-	std::vector<int> res;
-	for (int i = 0; i < number; ++i)
-		tab_i[i] = i;
-
-	for (int i = 0; i < number; ++i) {
-		int x = rand() % number;
-		if (tab_i[x] == -1) {
-			--i;
-			continue;
-		}
-		res.push_back(tab_i[x]);
-		tab_i[x] = -1;
-	}
-	res.push_back(res[0]);
-	delete[] tab_i;
-	return res;
 }
 
 std::vector<int> Annealing::adjacentSolution(std::vector<int> res) {

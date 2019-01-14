@@ -15,10 +15,7 @@
 #define debug true
 
 enum TSP_algorithm {
-	BRUTEFORCE,
-	BRANCH_AND_BOUND,
-	TABU_SEARCH,
-	SIMULATED_ANNEALING
+	BRUTEFORCE, BRANCH_AND_BOUND, SIMULATED_ANNEALING, GENETIC
 };
 
 class TSP {
@@ -37,7 +34,9 @@ public:
 
 	std::vector<int> getResultPath();
 	int getResultCost();
-	int calcCost(std::vector<int>& path);
+	int calcCost(const std::vector<int>& path);
+	int calcCostWithBeginAndEnd(const std::vector<int>& path);
+	std::vector<int> randomSolution(int number);
 
 protected:
 	bool nextPermutation(int* begin, int* end);

@@ -14,6 +14,11 @@ App::App() :
 		;
 }
 
+App::App(std::string filename) :
+		graph() {
+	enterFileName(filename);
+}
+
 App::~App() {
 	// TODO Auto-generated destructor stub
 }
@@ -26,8 +31,8 @@ void App::run() {
 				<< "Wierzchołków: " << graph.getVertexNumber() << std::endl
 				<< "Menu:" << std::endl << "1. Brute Force" << std::endl
 				<< "2. Branch and Bound" << std::endl
-				<< "3. Tabu Search (niezaimplementowane)" << std::endl
-				<< "4. Simulated Annealing" << std::endl
+				<< "3. Simulated Annealing" << std::endl
+				<< "4. Genetic Algorithm" << std::endl
 				<< "7. Autotest Simulated Annealing" << std::endl
 				<< "8. Pokaż graf" << std::endl << "9. Wczytaj plik ponownie"
 				<< std::endl << "0. Wyjście" << std::endl;
@@ -44,15 +49,16 @@ void App::run() {
 				graph.solveTSP(BRANCH_AND_BOUND);
 				break;
 			case 3:
-				std::cout << "METODA TABU SEARCH" << std::endl;
-				graph.solveTSP(TABU_SEARCH);
-				break;
-			case 4:
 				std::cout << "METODA SIMULATED ANNEALING" << std::endl;
 				graph.solveTSP(SIMULATED_ANNEALING);
 				break;
+			case 4:
+				std::cout << "METODA GENETIC" << std::endl;
+				graph.solveTSP(GENETIC);
+				break;
 			case 7:
-				std::cout << "METODA SIMULATED ANNEALING - AUTOTEST" << std::endl;
+				std::cout << "METODA SIMULATED ANNEALING - AUTOTEST"
+						<< std::endl;
 				graph.annealingTest();
 				break;
 			case 8:
@@ -73,11 +79,15 @@ void App::run() {
 	}
 }
 
-bool App::enterFileName() {
+bool App::enterFileName(std::string filename) {
 	try {
 		std::string name;
-		std::cout << "Wprowadź nazwę pliku: ";
-		std::cin >> name;
+		if (filename == "") {
+			std::cout << "Wprowadź nazwę pliku: ";
+			std::cin >> name;
+		} else {
+			name = filename;
+		}
 		graph.loadFromFile(name);
 		std::cout << "Graf wczytano" << std::endl;
 	} catch (Exception & e) {

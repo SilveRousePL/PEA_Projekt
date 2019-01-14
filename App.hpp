@@ -9,17 +9,16 @@
 #define APP_HPP_
 #include <iostream>
 #include "Graph.hpp"
-//#include "Timer.hpp"
 
 class App {
 	Graph graph;
-	//Timer timer;
 
 public:
 	App();
+	App(std::string filename);
 	virtual ~App();
 	void run();
-	bool enterFileName();
+	bool enterFileName(std::string filename = "");
 	void showGraph();
 };
 

@@ -130,7 +130,6 @@ void Graph::saveToFile(std::string filename) {
 }
 
 void Graph::solveTSP(TSP_algorithm alg) {
-//std::unique_ptr<TSP> tsp;
 	TSP* tsp = nullptr;
 	Annealing* tsp_annealing = nullptr;
 	switch (alg) {
@@ -139,9 +138,6 @@ void Graph::solveTSP(TSP_algorithm alg) {
 		break;
 	case TSP_algorithm::BRANCH_AND_BOUND:
 		tsp = new BranchAndBound(adjacency_matrix);
-		break;
-	case TSP_algorithm::TABU_SEARCH:
-		throw NotImplemented("Tabu Search algorithm is not implemented");
 		break;
 	case TSP_algorithm::SIMULATED_ANNEALING:
 		tsp = new Annealing(adjacency_matrix);
@@ -156,6 +152,16 @@ void Graph::solveTSP(TSP_algorithm alg) {
 		 tsp_annealing->enterParam(beg_temp, temp_change_factor,
 		 worse_accept_factor);*/
 		tsp_annealing->enterParam(500, 0.99, 50);
+		break;
+	case TSP_algorithm::GENETIC:
+		/*
+		 * Macierz sąsiedztwa (vector<vector<int>>)
+		 * Wielkość populacji (int)
+		 * Współczynnik krzyżowania (float <0;1>)
+		 * Współczynnik mutacji (float <0;1>)
+		 * Mnożnik ilości akceptacji gorszych rozwiązań
+		 */
+		tsp = new Genetic(adjacency_matrix, 10, 0.5, 0.02, 10);
 		break;
 	default:
 		throw NotImplemented("Algorithm is not implemented");
@@ -172,6 +178,9 @@ void Graph::solveTSP(TSP_algorithm alg) {
 	std::cout << "Koszt = " << algorithm_result_cost << std::endl;
 	std::cout << "Czas: " << getTimeUs() << "us (" << getTimeMs() << " ms)"
 			<< std::endl;
+
+	if (tsp != nullptr)
+		delete tsp;
 }
 
 void Graph::annealingTest() {

@@ -44,13 +44,20 @@ int TSP::getResultCost() {
 	return result_cost;
 }
 
-int TSP::calcCost(std::vector<int>& path) {
+int TSP::calcCost(const std::vector<int>& path) {
 	if (path.size() <= 1)
 		return -1;
 	int cost = 0;
 	for (int i = 0; i != path.size() - 1; i++)
 		cost += adjacency_matrix[path[i]][path[i + 1]];
 	return cost;
+}
+
+int TSP::calcCostWithBeginAndEnd(const std::vector<int>& path) {
+	int result = calcCost(path);
+	if (result != -1)
+		result += adjacency_matrix[path[path.size() - 1]][path[0]];
+	return result;
 }
 
 bool TSP::nextPermutation(int* begin, int* end) { //Działa szybciej niż z STL-a
@@ -76,4 +83,24 @@ bool TSP::nextPermutation(int* begin, int* end) { //Działa szybciej niż z STL-
 			return false;
 		}
 	}
+}
+
+std::vector<int> TSP::randomSolution(int number) {
+	int* tab_i = new int[number];
+	std::vector<int> res;
+	for (int i = 0; i < number; ++i)
+		tab_i[i] = i;
+
+	for (int i = 0; i < number; ++i) {
+		int x = rand() % number;
+		if (tab_i[x] == -1) {
+			--i;
+			continue;
+		}
+		res.push_back(tab_i[x]);
+		tab_i[x] = -1;
+	}
+	res.push_back(res[0]);
+	delete[] tab_i;
+	return res;
 }
