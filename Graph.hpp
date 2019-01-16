@@ -44,6 +44,7 @@ public:
 
 	void solveTSP(TSP_algorithm alg);
 	void annealingTest();
+    void geneticTest();
 
 	void print();
 

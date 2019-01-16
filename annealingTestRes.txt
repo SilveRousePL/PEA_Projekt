@@ -1,2 +1,0 @@
-Nazwa	Średni czas	Najlepszy koszt
-data17.txt	2144	3081
