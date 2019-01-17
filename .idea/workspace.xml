@@ -12,38 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f225198-ff6e-4c75-a222-baccf8f416f4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.cproject" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.project" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.settings/language.settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.cdt.codan.core.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data100.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data17.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data171.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data323.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data34.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data358.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data36.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data39.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data403.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data43.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data443.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data45.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data48.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data53.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data56.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data65.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data70.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnnealingTest/data71.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/App.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Genetic.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Genetic.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Genetic.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Genetic.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graph.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Graph.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graph.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Graph.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/annealingTestFN.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/annealingTestRes.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -63,7 +32,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Genetic.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
+            <state relative-caret-position="704">
               <caret line="32" column="31" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
             </state>
           </provider>
@@ -72,8 +41,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Genetic.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="196" column="28" selection-start-line="196" selection-start-column="28" selection-end-line="196" selection-end-column="28" />
+            <state relative-caret-position="-732">
+              <caret line="126" column="37" selection-start-line="126" selection-start-column="37" selection-end-line="126" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -81,7 +50,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Graph.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
+            <state relative-caret-position="1012">
               <caret line="46" column="16" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="16" />
             </state>
           </provider>
@@ -90,7 +59,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
+            <state relative-caret-position="506">
               <caret line="23" selection-start-line="23" selection-end-line="23" />
             </state>
           </provider>
@@ -99,7 +68,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Graph.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="789">
+            <state relative-caret-position="3850">
               <caret line="175" column="39" selection-start-line="175" selection-start-column="39" selection-end-line="175" selection-end-column="39" />
             </state>
           </provider>
@@ -191,16 +160,18 @@
       <updated>1547517074809</updated>
       <workItem from="1547517077394" duration="2084000" />
       <workItem from="1547591355079" duration="5776000" />
+      <workItem from="1547734168292" duration="1859000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7860000" />
+    <option name="totallyTimeSpent" value="9719000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-2" y="-8" width="1924" height="1090" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2524013" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25506938" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -226,9 +197,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file:///usr/include/c++/7/ext/new_allocator.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2728">
@@ -236,38 +204,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App.cpp">
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Genetic.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        <state relative-caret-position="704">
+          <caret line="32" column="31" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Graph.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
+        <state relative-caret-position="1012">
           <caret line="46" column="16" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Graph.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="789">
+        <state relative-caret-position="3850">
           <caret line="175" column="39" selection-start-line="175" selection-start-column="39" selection-end-line="175" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Genetic.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="32" column="31" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Genetic.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="196" column="28" selection-start-line="196" selection-start-column="28" selection-end-line="196" selection-end-column="28" />
+        <state relative-caret-position="-732">
+          <caret line="126" column="37" selection-start-line="126" selection-start-column="37" selection-end-line="126" selection-end-column="37" />
         </state>
       </provider>
     </entry>

@@ -130,7 +130,6 @@ void Genetic::crossPopulation() {
     }
 }
 
-//PMX
 std::vector<int> Genetic::cross(const std::vector<int>& first_population,
                                 const std::vector<int>& second_population) {
     std::vector<int> child;
@@ -206,7 +205,6 @@ void Genetic::quickSort(PopValue *arr, int left, int right) {
     int i = left, j = right;
     PopValue tmp;
     PopValue pivot = arr[(left + right) / 2];
-    /* partition */
     while (i <= j) {
         while (arr[i].value < pivot.value)
             ++i;
@@ -220,7 +218,6 @@ void Genetic::quickSort(PopValue *arr, int left, int right) {
             --j;
         }
     };
-    /* recursion */
     if (left < j)
         quickSort(arr, left, j);
     if (i < right)
