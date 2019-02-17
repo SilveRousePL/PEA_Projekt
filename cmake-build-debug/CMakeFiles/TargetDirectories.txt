@@ -1,3 +1,0 @@
-/home/darek/Projekty/PEA_Projekt/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/darek/Projekty/PEA_Projekt/cmake-build-debug/CMakeFiles/PEA_Projekt.dir
-/home/darek/Projekty/PEA_Projekt/cmake-build-debug/CMakeFiles/edit_cache.dir
